@@ -1,5 +1,7 @@
 package com.reymon.pw.api.service;
 
+import java.util.List;
+
 import com.reymon.pw.api.repository.modelo.Estudiante;
 
 public interface IEstudianteService {
@@ -13,4 +15,5 @@ public interface IEstudianteService {
 
     public void save(Estudiante estudiante);
 
+    public List<Estudiante> searchByGender(String genero);
 }

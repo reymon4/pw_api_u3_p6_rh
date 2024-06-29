@@ -1,5 +1,7 @@
 package com.reymon.pw.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,12 @@ public class EstudianteServiceImpl implements IEstudianteService{
     @Override
     public void save(Estudiante estudiante) {
         this.estudianteRepository.insert(estudiante);
+    }
+
+    @Override
+    public List<Estudiante> searchByGender(String genero) {
+        // TODO Auto-generated method stub
+     return this.estudianteRepository.selectEstudiantesByGender(genero);
     }
 
     

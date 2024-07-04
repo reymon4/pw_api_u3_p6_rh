@@ -25,9 +25,8 @@ public class EstudianteController {
 	@Autowired
 	private IEstudianteService estudianteService;
 
-	@GetMapping(path = "/search/{id}/nuevo/{nombre}")
-	public Estudiante getEstudiante(@PathVariable Integer id, @PathVariable String nombre) {
-		System.out.println(nombre);
+	@GetMapping(path = "/{id}")
+	public Estudiante getEstudiante(@PathVariable Integer id) {
 		return this.estudianteService.search(id);
 	}
 	@GetMapping(path = "/search/{id}")
@@ -42,25 +41,31 @@ public class EstudianteController {
 		return this.estudianteService.searchByGender(genero);
 	}
 
-	@PostMapping(path = "/save")
+	@PostMapping
 	public void saveEstudiante(@RequestBody Estudiante estu) {
 		this.estudianteService.save(estu);
 	}
 
-	@PatchMapping(path = "/partialUpdate")
-	public void partialUpdateEstudiante(@RequestBody Estudiante estu) {
-		this.estudianteService.update(estu);
-	}
-
-	@PutMapping(path = "/update")
-	public void updateEstudiante(@RequestBody Estudiante estu) {
-		Estudiante aux = this.estudianteService.search(estu.getId());
+	@PatchMapping(path = "/{id}")
+	public void partialUpdateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
+		estu.setId(id);
+		Estudiante aux = estu;
 		/*Only Lastname update */
 		aux.setApellido(estu.getApellido());
 		this.estudianteService.update(aux);
+		
 	}
 
-	@DeleteMapping(path = "/delete/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
+	@PutMapping(path = "/{id}")
+	public void updateEstudiante(@RequestBody Estudiante estu,@PathVariable Integer id) {
+		estu.setId(id);
+	
+		Estudiante estudiante = estu;
+		this.estudianteService.update(estudiante);
+		 this.estudianteService.update(aux);
+	}
+
+	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
 	public void deleteEstudiante(@PathVariable Integer id) {
 		this.estudianteService.delete(id);
 	}

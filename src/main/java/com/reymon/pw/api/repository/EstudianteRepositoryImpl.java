@@ -47,8 +47,8 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository{
     @Override
     public List<Estudiante> selectEstudiantesByGender(String genero ) {
         // TODO Auto-generated method stub
-        TypedQuery<Estudiante> query = this.em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = genero", Estudiante.class);
-        query.setParameter(genero, "genero");
+        TypedQuery<Estudiante> query = this.em.createQuery("SELECT e FROM Estudiante e WHERE e.genero = :genero", Estudiante.class);
+        query.setParameter("genero", genero);
         return query.getResultList();
     }
 

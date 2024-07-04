@@ -25,12 +25,20 @@ public class EstudianteController {
 	@Autowired
 	private IEstudianteService estudianteService;
 
-	@GetMapping(path = "/search/{id}")
-	public Estudiante getEstudiante(@PathVariable Integer id) {
+	@GetMapping(path = "/search/{id}/nuevo/{nombre}")
+	public Estudiante getEstudiante(@PathVariable Integer id, @PathVariable String nombre) {
+		System.out.println(nombre);
 		return this.estudianteService.search(id);
 	}
+	@GetMapping(path = "/search/{id}")
+	public Estudiante getByPathVariableAndRequestParam(@PathVariable Integer id, @RequestParam String nombre) {
+		System.out.println(nombre);
+		return this.estudianteService.search(id);
+	}
+	/*searchByGender?genero=M&edad=35 */
 	@GetMapping(path = "/searchByGender")
-	public List<Estudiante> getEstudiantebyGender(@RequestParam String genero) {
+	public List<Estudiante> getEstudiantebyGender(@RequestParam String genero, @RequestParam Integer edad) {
+		System.out.println(edad);
 		return this.estudianteService.searchByGender(genero);
 	}
 
@@ -52,7 +60,7 @@ public class EstudianteController {
 		this.estudianteService.update(aux);
 	}
 
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/delete/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
 	public void deleteEstudiante(@PathVariable Integer id) {
 		this.estudianteService.delete(id);
 	}

@@ -29,17 +29,18 @@ public class EstudianteController {
 	public Estudiante getEstudiante(@PathVariable Integer id) {
 		return this.estudianteService.search(id);
 	}
-	@GetMapping(path = "/search/{id}")
+	@GetMapping(path = "/mix/{id}")
 	public Estudiante getByPathVariableAndRequestParam(@PathVariable Integer id, @RequestParam String nombre) {
 		System.out.println(nombre);
 		return this.estudianteService.search(id);
 	}
 	/*searchByGender?genero=M&edad=35 */
-	@GetMapping(path = "/searchByGender")
-	public List<Estudiante> getEstudiantebyGender(@RequestParam String genero, @RequestParam Integer edad) {
-		System.out.println(edad);
+	@GetMapping(path = "/gender")
+	//http://localhost:8080/API/v1.0/Matricula/estudiantes/gender?genero=M
+	public List<Estudiante> getEstudiantebyGender(@RequestParam String genero) {
 		return this.estudianteService.searchByGender(genero);
 	}
+	//
 
 	@PostMapping
 	public void saveEstudiante(@RequestBody Estudiante estu) {
@@ -48,21 +49,19 @@ public class EstudianteController {
 
 	@PatchMapping(path = "/{id}")
 	public void partialUpdateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
-		estu.setId(id);
-		Estudiante aux = estu;
-		/*Only Lastname update */
+		Estudiante aux = this.getEstudiante(id);
 		aux.setApellido(estu.getApellido());
 		this.estudianteService.update(aux);
 		
 	}
+	//¡Se ha generado el archivo!
 
 	@PutMapping(path = "/{id}")
 	public void updateEstudiante(@RequestBody Estudiante estu,@PathVariable Integer id) {
 		estu.setId(id);
-	
+
 		Estudiante estudiante = estu;
 		this.estudianteService.update(estudiante);
-		 this.estudianteService.update(aux);
 	}
 
 	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */

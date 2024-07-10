@@ -1,5 +1,7 @@
 package com.reymon.pw.api.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,11 @@ public class MateriaServiceImpl implements IMateriaService {
 	public void borrar(Integer id) {
 		// TODO Auto-generated method stub
 		this.iMateriaRepository.eliminar(id);
+	}
+	@Override
+	public List<Materia> buscarPorCredito(Integer credito) {
+		// TODO Auto-generated method stub
+		return this.iMateriaRepository.buscarPorCredito(credito);
 	}
 
 

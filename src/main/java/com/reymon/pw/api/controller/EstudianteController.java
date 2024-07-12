@@ -41,21 +41,29 @@ public class EstudianteController {
 	public Estudiante getByPathVariableAndRequestParam(@PathVariable Integer id, @RequestParam String nombre) {
 		System.out.println(nombre);
 		return this.estudianteService.search(id);
+		
 	}
 
 	/* searchByGender?genero=M&edad=35 */
 	@GetMapping(path = "/gender")
 	// http://localhost:8080/API/v1.0/Matricula/estudiantes/gender?genero=M
-	public List<Estudiante> getEstudiantebyGender(@RequestParam String genero) {
-		return this.estudianteService.searchByGender(genero);
+	public ResponseEntity<List<Estudiante>> getEstudiantebyGender(@RequestParam String genero) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("hola", "quiubo, estás consultando el resource estudiante");
+		headers.add("msg240", "Resource sent");
+	
+		return new ResponseEntity<>(this.estudianteService.searchByGender(genero), headers, 240);
+
 	}
 	//
 
 	@PostMapping
 	public ResponseEntity<Estudiante> save(@RequestBody Estudiante estu) {
 		this.estudianteService.save(estu);
-		return ResponseEntity.status(201).body(estu);
-
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("msg238", "Resource post");
+	
+		return new ResponseEntity<>(estu, headers, 238);
 	}
 
 	@PatchMapping(path = "/{id}")
@@ -63,7 +71,11 @@ public class EstudianteController {
 		Estudiante aux = this.estudianteService.search(id);
 		aux.setApellido(estu.getApellido());
 		this.estudianteService.update(aux);
-		return ResponseEntity.status(239).body(aux);
+		//return ResponseEntity.status(239).body(aux);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("msg238", "Resource updated!");
+	
+		return new ResponseEntity<>(aux, headers, 238);
 
 	}
 
@@ -73,13 +85,21 @@ public class EstudianteController {
 
 		Estudiante estudiante = estu;
 		this.estudianteService.update(estudiante);
-		return ResponseEntity.status(238).body(estudiante);
+		//return ResponseEntity.status(238).body(estudiante);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("msg241", "Resource complete updated!");
+	
+		return new ResponseEntity<>(estu, headers, 241);
 	}
 
 	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
 	public ResponseEntity<String> deleteEstudiante(@PathVariable Integer id) {
 		this.estudianteService.delete(id);
-		return ResponseEntity.status(240).body("Borrada exitosamente");
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("msg242", "Resource deleted");
+	
+		return new ResponseEntity<>("Eliminación estudiante", headers, 238);
+		//return ResponseEntity.status(240).body("Borrada exitosamente");
 	}
 
 }

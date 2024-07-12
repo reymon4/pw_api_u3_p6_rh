@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class EstudianteController {
 	@Autowired
 	private IEstudianteService estudianteService;
 
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}",produces="application/xml")
 	public ResponseEntity<Estudiante> getEstudiante(@PathVariable Integer id) {
 		this.estudianteService.search(id);
 		HttpHeaders headers = new HttpHeaders();
@@ -57,7 +58,7 @@ public class EstudianteController {
 	}
 	//
 
-	@PostMapping
+	@PostMapping(produces = "application/json", consumes = "application/xml")
 	public ResponseEntity<Estudiante> save(@RequestBody Estudiante estu) {
 		this.estudianteService.save(estu);
 		HttpHeaders headers = new HttpHeaders();
@@ -66,7 +67,7 @@ public class EstudianteController {
 		return new ResponseEntity<>(estu, headers, 238);
 	}
 
-	@PatchMapping(path = "/{id}")
+	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Estudiante> partialUpdateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
 		Estudiante aux = this.estudianteService.search(id);
 		aux.setApellido(estu.getApellido());
@@ -79,7 +80,7 @@ public class EstudianteController {
 
 	}
 
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 	public ResponseEntity<Estudiante> updateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
 		estu.setId(id);
 
@@ -92,7 +93,7 @@ public class EstudianteController {
 		return new ResponseEntity<>(estu, headers, 241);
 	}
 
-	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
+	@DeleteMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE) /* SE PUEDE ENVIAR VARIOS PathVariable */
 	public ResponseEntity<String> deleteEstudiante(@PathVariable Integer id) {
 		this.estudianteService.delete(id);
 		HttpHeaders headers = new HttpHeaders();

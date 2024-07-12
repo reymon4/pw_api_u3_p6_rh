@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +27,7 @@ public class MateriaController {
 	@Autowired
 	private IMateriaService materiaService;
  
-	@PostMapping
+	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Materia> agregar(@RequestBody Materia materia) {
 		this.materiaService.agregar(materia);
 		HttpHeaders cabeceraPost= new HttpHeaders();
@@ -36,7 +37,7 @@ public class MateriaController {
 		//return ResponseEntity.status(201).body(materia);
 	}
  
-	@PutMapping(path = "/{id}")
+	@PutMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Materia> modificar(@RequestBody Materia materia, @PathVariable Integer id) {
 		materia.setId(id);
 		this.materiaService.modificar(materia);
@@ -49,7 +50,7 @@ public class MateriaController {
 		//return ResponseEntity.status(238).body(materia);
 	}
  
-	@DeleteMapping(path = "/{id}")
+	@DeleteMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> borrar(@PathVariable Integer id) {
 		this.materiaService.borrar(id);
 		//return ResponseEntity.status(240).body("Borrada exitosamente");
@@ -58,7 +59,7 @@ public class MateriaController {
 		cabeceraDelete.add("valor", "MAteria eliminada");
 		return new ResponseEntity<>("Eliminado correctamente",cabeceraDelete,240);
 	}
-	@GetMapping(path = "/{id}")
+	@GetMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Materia> encontrar(@PathVariable Integer id) {
 
 		HttpHeaders cabeceras = new HttpHeaders();
@@ -78,7 +79,7 @@ public class MateriaController {
 		return this.materiaService.buscar(id);
 	}
  
-	@PatchMapping(path = "/{id}")
+	@PatchMapping(path = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Materia> actualizarParcial(@RequestBody Materia m, @PathVariable Integer id) {
 		m.setId(id);
 		Materia materia = this.materiaService.buscar(m.getId());

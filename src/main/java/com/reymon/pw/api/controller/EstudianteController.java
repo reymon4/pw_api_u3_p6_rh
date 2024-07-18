@@ -3,6 +3,7 @@ package com.reymon.pw.api.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class EstudianteController {
 	@Autowired
 	private IMateriaService iMateriaService;
 
-	@GetMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Estudiante> getEstudiante(@PathVariable Integer id) {
 		this.estudianteService.search(id);
 		HttpHeaders headers = new HttpHeaders();
@@ -96,7 +97,7 @@ public class EstudianteController {
 		return ResponseEntity.status(240).body("Borrada exitosamente");
 	}
 
-	@GetMapping(path = "/hateoas/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public EstudianteTO buscarHateoas(@PathVariable Integer id) {
 		EstudianteTO estudiante = this.estudianteService.buscarPorId(id);
 		// ERROR es una carga EAGER
@@ -108,19 +109,33 @@ public class EstudianteController {
 		// PARA CREAR EL HIPERVINCULO USAMOS LA CLASE LINK
 		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEStudiante(id))
 				.withRel("sus materias");
-		Link myLink2 = linkTo(methodOn(EstudianteController.class).getEstudiante(id))
-				.withRel("sus materias");
-		
+		Link myLink2 = linkTo(methodOn(EstudianteController.class).getEstudiante(id)).withRel("sus materias");
+
 		estudiante.add(myLink);
 		estudiante.add(myLink2);
-		
+
 		return estudiante;
 
 	}
 
-	@GetMapping(path = "{id}/materiassss", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(path = "{id}/materiassss", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<MateriaTO> buscarMateriasPorIdEStudiante(@PathVariable Integer id) {
 		return this.iMateriaService.buscarPorIdEstudiante(id);
+	}
+
+	// TAREA 9
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<EstudianteTO> buscarHateoas() {
+		List<EstudianteTO> estudiantes = this.estudianteService.selectAll();
+
+		for (EstudianteTO est : estudiantes) {
+			Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEStudiante(est.getId()))
+					.withRel("Materias del estudiante");
+			est.add(myLink);
+		}
+
+		return estudiantes;
+
 	}
 
 }

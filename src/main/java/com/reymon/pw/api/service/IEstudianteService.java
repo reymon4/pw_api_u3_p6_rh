@@ -18,4 +18,5 @@ public interface IEstudianteService {
     public void save(EstudianteTO estudiante);
 
     public List<Estudiante> searchByGender(String genero);
+    public List<EstudianteTO> selectAll();
 }

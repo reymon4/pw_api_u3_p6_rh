@@ -12,4 +12,5 @@ public interface IEstudianteRepository {
     public void insert(Estudiante estudiante);
 
     public List<Estudiante> selectEstudiantesByGender(String genero);
+    public List<Estudiante> selectAll();
 }

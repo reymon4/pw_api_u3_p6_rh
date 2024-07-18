@@ -1,5 +1,6 @@
 package com.reymon.pw.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,18 @@ public class EstudianteServiceImpl implements IEstudianteService {
 		// TODO Auto-generated method stub
 		Estudiante estu = this.estudianteRepository.select(id);
 		return this.convertir(estu);
+	}
+
+	@Override
+	public List<EstudianteTO> selectAll() {
+		// TODO Auto-generated method stub
+		List<Estudiante> list = this.estudianteRepository.selectAll();
+		List<EstudianteTO> listTO = new ArrayList<>();
+		for (Estudiante est : list) {
+			listTO.add(this.convertir(est));
+		}
+		return listTO;
+
 	}
 
 }

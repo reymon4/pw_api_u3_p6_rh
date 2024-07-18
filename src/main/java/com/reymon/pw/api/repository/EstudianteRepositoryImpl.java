@@ -52,5 +52,13 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository{
         return query.getResultList();
     }
 
+	@Override
+	public List<Estudiante> selectAll() {
+		// TODO Auto-generated method stub
+		  TypedQuery<Estudiante> query = this.em.createQuery("SELECT e FROM Estudiante e", Estudiante.class);
+	
+	        return query.getResultList();
+	}
+
   
 }

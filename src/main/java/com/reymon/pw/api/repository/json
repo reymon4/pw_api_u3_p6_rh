@@ -1,0 +1,29 @@
+{
+    "nombre": "Patricia",
+    "apellido": "Pozo",
+    "fechaNacimiento": "1985-01-01T00:00:00",
+    "genero": "F",
+    "materias": [
+        {
+            "nombre": "nombre",
+            "creditos": 0,
+            "precio": 0.0,
+            "semestre": "semestre",
+            "profesor": "profesor"
+        },
+        {
+            "nombre": "nombre2",
+            "creditos": 0,
+            "precio": 0.0,
+            "semestre": "semestre",
+            "profesor": "profesor2"
+        },
+        {
+            "nombre": "nombre3",
+            "creditos": 0,
+            "precio": 0.0,
+            "semestre": "semestre",
+            "profesor": "profesor3"
+        }
+    ]
+}

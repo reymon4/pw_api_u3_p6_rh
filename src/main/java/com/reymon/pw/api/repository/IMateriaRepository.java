@@ -11,4 +11,6 @@ public interface IMateriaRepository {
 	void eliminar(Integer id);
 	List<Materia> buscarPorCredito(Integer credito);
 
+	
+	public List<Materia> seleccionarPorIdEstudiante(Integer id);
 }

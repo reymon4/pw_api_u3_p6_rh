@@ -1,11 +1,16 @@
 package com.reymon.pw.api.repository.modelo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
@@ -27,6 +32,10 @@ public class Estudiante {
 
 	@Column(name = "estu_genero")
 	private String genero;
+	
+	@JsonBackReference
+	@OneToMany(mappedBy = "estudiante", cascade=CascadeType.ALL)
+	private List<Materia> materias;
 
 
 	// GET & SET
@@ -68,4 +77,14 @@ public class Estudiante {
 	public void setGenero(String genero) {
 		this.genero = genero;
 	}
+
+	public List<Materia> getMaterias() {
+		return materias;
+	}
+
+	public void setMaterias(List<Materia> materias) {
+		this.materias = materias;
+	}
+	
+	
 }

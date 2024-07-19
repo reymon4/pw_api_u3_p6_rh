@@ -70,23 +70,23 @@ public class EstudianteController {
 
 	}
 
-	@PatchMapping(path = "/{id}")
-	public ResponseEntity<Estudiante> partialUpdateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
-		Estudiante aux = this.estudianteService.search(id);
-		aux.setApellido(estu.getApellido());
-		this.estudianteService.update(aux);
-		return ResponseEntity.status(239).body(aux);
+//	@PatchMapping(path = "/{id}")
+//	public ResponseEntity<Estudiante> partialUpdateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
+//		Estudiante aux = this.estudianteService.search(id);
+//		aux.setApellido(estu.getApellido());
+//		this.estudianteService.update(aux);
+//		return ResponseEntity.status(239).body(aux);
+//
+//	}
 
-	}
-
-	@PutMapping(path = "/{id}")
-	public ResponseEntity<Estudiante> updateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
-		estu.setId(id);
-
-		Estudiante estudiante = estu;
-		this.estudianteService.update(estudiante);
-		return ResponseEntity.status(238).body(estudiante);
-	}
+//	@PutMapping(path = "/{id}")
+//	public ResponseEntity<Estudiante> updateEstudiante(@RequestBody Estudiante estu, @PathVariable Integer id) {
+//		estu.setId(id);
+//
+//		Estudiante estudiante = estu;
+//		this.estudianteService.update(estudiante);
+//		return ResponseEntity.status(238).body(estudiante);
+//	}
 
 	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
 	public ResponseEntity<String> deleteEstudiante(@PathVariable Integer id) {

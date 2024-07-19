@@ -23,6 +23,8 @@ public class Estudiante {
 	@SequenceGenerator(name = "seq_estudiante", sequenceName = "seq_estudiante", allocationSize = 1)
 	@Column(name = "estu_id")
 	private Integer id;
+	@Column(name = "estu_cedula")
+	private String cedula;
 	@Column(name = "estu_nombre")
 	private String nombre;
 	@Column(name = "estu_apellido")
@@ -85,6 +87,15 @@ public class Estudiante {
 	public void setMaterias(List<Materia> materias) {
 		this.materias = materias;
 	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
+	}
+	
 	
 	
 }

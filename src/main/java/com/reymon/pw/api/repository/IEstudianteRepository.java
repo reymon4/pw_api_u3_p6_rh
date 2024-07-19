@@ -10,7 +10,9 @@ public interface IEstudianteRepository {
     public void update(Estudiante estudiante);
     public void delete(Integer id);
     public void insert(Estudiante estudiante);
-
+    public Estudiante selectByCedula(String cedula); 
     public List<Estudiante> selectEstudiantesByGender(String genero);
     public List<Estudiante> selectAll();
+    
+    public void deleteByCedula(String cedula);
 }

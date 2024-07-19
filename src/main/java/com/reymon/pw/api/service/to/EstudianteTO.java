@@ -20,7 +20,7 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 
 	private String nombre;
 
-
+	private String cedula;
 	private String apellido;
 
 
@@ -71,6 +71,14 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 
 	public void setGenero(String genero) {
 		this.genero = genero;
+	}
+
+	public String getCedula() {
+		return cedula;
+	}
+
+	public void setCedula(String cedula) {
+		this.cedula = cedula;
 	}
 
 

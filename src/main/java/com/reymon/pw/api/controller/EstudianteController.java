@@ -3,12 +3,12 @@ package com.reymon.pw.api.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,9 +27,6 @@ import com.reymon.pw.api.service.IEstudianteService;
 import com.reymon.pw.api.service.IMateriaService;
 import com.reymon.pw.api.service.to.EstudianteTO;
 import com.reymon.pw.api.service.to.MateriaTO;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping(path = "/estudiantes")
@@ -137,5 +134,25 @@ public class EstudianteController {
 		return estudiantes;
 
 	}
+	
+	//Taller33
+	@DeleteMapping(path = "/{cedula}") /* SE PUEDE ENVIAR VARIOS PathVariable */
+	public ResponseEntity<String> deleteEstudiantebyCedula(@PathVariable String cedula) {
+		this.estudianteService.deleteByCedula(cedula);
+		return ResponseEntity.status(240).body("Borrada exitosamente");
+	}
+	@GetMapping(path = "/{cedula}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteTO> getEstudianteByCedula(@PathVariable String cedula) {
+			return ResponseEntity.status(200).body(this.estudianteService.searchByCedula(cedula));
+
+	}
+	@PutMapping(path = "/{cedula}", consumes= MediaType.APPLICATION_JSON_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<EstudianteTO> updateEstudianteByCedula(@RequestBody EstudianteTO estu, @PathVariable String cedula) {
+		estu.setCedula(cedula);
+		EstudianteTO estudiante = estu;
+		this.estudianteService.update(estudiante);
+		return ResponseEntity.status(HttpStatus.OK).body(estudiante);
+	}
+	
 
 }

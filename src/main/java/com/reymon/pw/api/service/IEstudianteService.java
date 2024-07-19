@@ -11,12 +11,14 @@ public interface IEstudianteService {
     public Estudiante search(Integer id);
 
     public EstudianteTO buscarPorId(Integer id);
-    public void update(Estudiante estudiante);
+    public void update(EstudianteTO estudiante);
 
     public void delete(Integer id);
 
     public void save(EstudianteTO estudiante);
 
+    public EstudianteTO searchByCedula(String cedula);  
+    public void deleteByCedula(String cedula);
     public List<Estudiante> searchByGender(String genero);
     public List<EstudianteTO> selectAll();
 }

@@ -60,5 +60,19 @@ public class EstudianteRepositoryImpl implements IEstudianteRepository{
 	        return query.getResultList();
 	}
 
+	@Override
+	public Estudiante selectByCedula(String cedula) {
+		// TODO Auto-generated method stub
+		 TypedQuery<Estudiante> query = this.em.createQuery("SELECT e FROM Estudiante e WHERE e.cedula = :cedula", Estudiante.class);
+	        query.setParameter("cedula", cedula);
+	        return query.getSingleResult();
+	}
+
+	@Override
+	public void deleteByCedula(String cedula) {
+		// TODO Auto-generated method stub
+		this.em.remove(this.selectByCedula(cedula));
+	}
+
   
 }

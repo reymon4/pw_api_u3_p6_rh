@@ -151,11 +151,10 @@ public class EstudianteController {
 	}
 	@PutMapping(path = "/{cedula}", consumes= MediaType.APPLICATION_JSON_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EstudianteTO> updateEstudianteByCedula(@RequestBody EstudianteTO estu, @PathVariable String cedula) {
-		estu.setCedula(cedula);
 		
-		EstudianteTO estudiante = estu;
-		System.out.println(estu.toString());
-		this.estudianteService.update(estudiante);
+		EstudianteTO estudiante = this.estudianteService.searchByCedula(cedula);
+		estu.setId(estudiante.getId());
+		this.estudianteService.update(estu);
 		return ResponseEntity.status(HttpStatus.OK).body(estudiante);
 	}
 	

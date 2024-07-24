@@ -7,13 +7,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +27,11 @@ import com.reymon.pw.api.service.IMateriaService;
 import com.reymon.pw.api.service.to.EstudianteTO;
 import com.reymon.pw.api.service.to.MateriaTO;
 
+
+
+
 @RestController
+@CrossOrigin
 @RequestMapping(path = "/estudiantes")
 
 public class EstudianteController {
@@ -38,16 +41,15 @@ public class EstudianteController {
 	@Autowired
 	private IMateriaService iMateriaService;
 
-	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Estudiante> getEstudiante(@PathVariable Integer id) {
-		this.estudianteService.search(id);
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("hola", "quiubo, estás consultando el resource estudiante");
-		headers.add("msg237", "Resource sent");
-		// return ResponseEntity.status(236).body(this.estudianteService.search(id));
-		return new ResponseEntity<>(this.estudianteService.search(id), headers, 237);
-
-	}
+//	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public ResponseEntity<Estudiante> getEstudiante(@PathVariable Integer id) {
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.add("hola", "quiubo, estás consultando el resource estudiante");
+//		headers.add("msg237", "Resource sent");
+//		// return ResponseEntity.status(236).body(this.estudianteService.search(id));
+//		return new ResponseEntity<>(this.estudianteService.search(id), headers, 237);
+//
+//	}
 
 	@GetMapping(path = "/mix/{id}")
 	public Estudiante getByPathVariableAndRequestParam(@PathVariable Integer id, @RequestParam String nombre) {
@@ -65,6 +67,7 @@ public class EstudianteController {
 
 	@PostMapping
 	public ResponseEntity<EstudianteTO> save(@RequestBody EstudianteTO estu) {
+	System.out.println(estu.toString());
 		this.estudianteService.save(estu);
 		return ResponseEntity.status(201).body(estu);
 
@@ -88,32 +91,32 @@ public class EstudianteController {
 //		return ResponseEntity.status(238).body(estudiante);
 //	}
 
-	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
-	public ResponseEntity<String> deleteEstudiante(@PathVariable Integer id) {
-		this.estudianteService.delete(id);
-		return ResponseEntity.status(240).body("Borrada exitosamente");
-	}
+//	@DeleteMapping(path = "/{id}") /* SE PUEDE ENVIAR VARIOS PathVariable */
+//	public ResponseEntity<String> deleteEstudiante(@PathVariable Integer id) {
+//		this.estudianteService.delete(id);
+//		return ResponseEntity.status(240).body("Borrada exitosamente");
+//	}
 
-	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public EstudianteTO buscarHateoas(@PathVariable Integer id) {
-		EstudianteTO estudiante = this.estudianteService.buscarPorId(id);
-		// ERROR es una carga EAGER
-		/*
-		 * List<MateriaTO> lista= this.iMateriaService.buscarPorIdEstudiante(id);
-		 * estudiante.setMaterias(lista);
-		 */
-
-		// PARA CREAR EL HIPERVINCULO USAMOS LA CLASE LINK
-		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEStudiante(id))
-				.withRel("sus materias");
-		Link myLink2 = linkTo(methodOn(EstudianteController.class).getEstudiante(id)).withRel("sus materias");
-
-		estudiante.add(myLink);
-		estudiante.add(myLink2);
-
-		return estudiante;
-
-	}
+//	@GetMapping(path = "/hateoas/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+//	public EstudianteTO buscarHateoas(@PathVariable Integer id) {
+//		EstudianteTO estudiante = this.estudianteService.buscarPorId(id);
+//		// ERROR es una carga EAGER
+//		/*
+//		 * List<MateriaTO> lista= this.iMateriaService.buscarPorIdEstudiante(id);
+//		 * estudiante.setMaterias(lista);
+//		 */
+//
+//		// PARA CREAR EL HIPERVINCULO USAMOS LA CLASE LINK
+//		Link myLink = linkTo(methodOn(EstudianteController.class).buscarMateriasPorIdEStudiante(id))
+//				.withRel("sus materias");
+//		Link myLink2 = linkTo(methodOn(EstudianteController.class).getEstudiante(id)).withRel("sus materias");
+//
+//		estudiante.add(myLink);
+//		estudiante.add(myLink2);
+//
+//		return estudiante;
+//
+//	}
 
 	@GetMapping(path = "{id}/materiassss", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<MateriaTO> buscarMateriasPorIdEStudiante(@PathVariable Integer id) {
@@ -149,7 +152,9 @@ public class EstudianteController {
 	@PutMapping(path = "/{cedula}", consumes= MediaType.APPLICATION_JSON_VALUE ,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<EstudianteTO> updateEstudianteByCedula(@RequestBody EstudianteTO estu, @PathVariable String cedula) {
 		estu.setCedula(cedula);
+		
 		EstudianteTO estudiante = estu;
+		System.out.println(estu.toString());
 		this.estudianteService.update(estudiante);
 		return ResponseEntity.status(HttpStatus.OK).body(estudiante);
 	}

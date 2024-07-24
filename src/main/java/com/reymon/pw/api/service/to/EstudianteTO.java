@@ -81,6 +81,12 @@ public class EstudianteTO extends RepresentationModel<EstudianteTO> implements S
 		this.cedula = cedula;
 	}
 
+	@Override
+	public String toString() {
+		return "EstudianteTO [id=" + id + ", nombre=" + nombre + ", cedula=" + cedula + ", apellido=" + apellido
+				+ ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero + "]";
+	}
+
 
 
 
